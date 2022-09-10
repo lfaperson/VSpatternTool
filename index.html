@@ -1,0 +1,151 @@
+<html>
+<p>
+Pattern Generator
+</p>
+<head>
+
+<style>
+body {
+  font-family: 'Courier New', monospace;
+}
+
+      #MyDiv input {
+        width: 25px;
+        height: 25px;
+      }
+</style>
+
+<script>
+
+</var buttonDiv = document.getElementById("MyButtons");
+var numberDiv = document.getElementById("MyNumbers");
+
+const myBr = document.createElement("br");
+
+const genButton = document.createElement("button");
+genButton.innerHTML = "Generate Pattern"
+genButton.style.height = "32px";
+genButton.style.width = "128px";
+genButton.setAttribute("onclick", "calcGrid()");
+
+const genGridbutton = document.createElement("button");
+genGridbutton.innerHTML = "Generate Grid"
+genGridbutton.style.height = "32px";
+genGridbutton.style.width = "128px";
+genGridbutton.setAttribute("onclick", "genGrid()");
+
+const genGridw = document.createElement("input");
+genGridw.type = "text";
+genGridw.value = "14";
+genGridw.setAttribute("id", "genGridw");
+
+const genGridh =  document.createElement("input");
+genGridh.type = "text";
+genGridh.value = "14";
+genGridh.setAttribute("id", "genGridh");
+
+let gridSizeW = 0
+
+
+function genGrid(){
+var div = document.getElementById("MyDiv");
+div.innerHTML = "";
+var gwidth = document.getElementById('genGridw').value
+var gheight = document.getElementById('genGridh').value
+gridSizeW = gwidth
+var buttonNum = gheight * gwidth,
+  rowButtonNumber = gwidth;
+  rownum = 0;
+for (var i = 0; i < buttonNum; i++) {
+	if (rownum<9){
+  var text = document.createTextNode(rownum+1);
+  div.appendChild(text);
+  var text = document.createTextNode(" ");
+  div.appendChild(text);
+  }
+  else{
+  var text = document.createTextNode(rownum+1);
+  }
+	div.appendChild(text);
+  for (var j = 0; j < rowButtonNumber; j++, i++) {
+    var chkbx = document.createElement("INPUT");
+    chkbx.setAttribute("type", "checkbox");
+    chkbx.setAttribute("class", "myBoxes")
+    
+    if (i >= buttonNum) {
+      break;
+    } else {
+      
+      div.appendChild(chkbx);
+    }
+  }
+  		rownum++
+      const myBr = document.createElement("br");
+			div.appendChild(myBr);
+  i--;
+}
+}
+
+
+
+
+const genBox = document.createElement("textarea");
+genBox.value = ("click generate pattern to fill this");
+genBox.setAttribute("id", "resultBox");
+genBox.rows = ("80");
+genBox.cols = ("80");
+document.body.appendChild(genBox);
+
+buttonDiv.appendChild(genButton);
+
+buttonDiv.appendChild(genGridbutton);
+
+numberDiv.appendChild(genGridh);
+
+numberDiv.appendChild(genGridw);
+
+
+MyDiv.appendChild(myBr);
+
+
+function calcGrid() {
+var checkedvalue = [];
+var fillvalue
+checkedvalue.length = 0
+var inputElements = document.getElementsByClassName('myBoxes');
+for(var i=0; inputElements[i]; ++i){
+			if (i > 0 && i % gridSizeW == 0) {
+       checkedvalue.push("\",\n")
+      }
+      if(inputElements[i].checked){
+           checkedvalue.push("#")
+      }
+      else{
+	      	checkedvalue.push("_")
+      }
+	}
+  		checkedvalue.push("\",")
+	var fillBox = document.getElementById("resultBox");
+  var fillvalue = checkedvalue.join("")
+  fillBox.value = fillvalue.replace(/^/gm, '		\"');
+}
+genGrid(15, 5)
+</script>
+</head>
+
+<body>
+<div id="MyButtons">
+</div>
+
+<body>
+<div id="MyNumbers">
+Height / Width:
+</div>
+
+
+<div id="MyDiv">
+</div>
+
+</body>
+
+</html>
